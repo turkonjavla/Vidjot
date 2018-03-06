@@ -1,0 +1,19 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "node/express app with CRUD ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turkonjavla/Vidjot.git"
+  },
+  "author": "Vladimir Turkonja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/turkonjavla/Vidjot/issues"
+  },
+  "homepage": "https://github.com/turkonjavla/Vidjot#readme"
+}
