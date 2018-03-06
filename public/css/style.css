@@ -1,0 +1,18 @@
+.dropdown-item {
+    width: 90%;
+    margin: 0 auto;
+    padding: 5px;
+    transition: all .2s ease-in-out;
+}
+
+.dropdown-item:hover {
+    border-radius: 5px;
+    padding: 5px;
+    width: 90%;
+    margin: 0 auto;
+    background-color: #3E4551;
+    color: #FFF;
+    -webkit-box-shadow: 2px 15px 33px -5px rgba(176,176,176,1);
+    -moz-box-shadow: 2px 15px 33px -5px rgba(176,176,176,1);
+    box-shadow: 2px 15px 33px -5px rgba(176,176,176,1);
+}
