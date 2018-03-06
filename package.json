@@ -2,7 +2,7 @@
   "name": "package",
   "version": "1.0.0",
   "description": "node/express app with CRUD ",
-  "main": "app.js",
+  "main": "bin/dev",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/turkonjavla/Vidjot#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.0.9"
   }
 }
