@@ -100,6 +100,16 @@ app.put("/ideas/:id", (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.delete("/ideas/:id", (req, res) => {
+    let id = req.params.id;
+    
+    Idea.findByIdAndRemove(id)
+        .then(() => {
+            res.redirect("/ideas");
+        })
+        .catch(err => console.log(err));
+});
+
 // ABOUT
 app.get("/about", (req, res) => {
     res.render("about");
