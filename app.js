@@ -49,10 +49,10 @@ app.get("/ideas/new", (req, res) => {
         ideaData = ({title: title, details: details});
 
     if(!title) {
-        errors.push({text: "Please enter a title"});
+        errors.push({text: "Title can\'t be empty."});
     }
     if(!details) {
-        errors.push({text: "Pleaase enter some details."});
+        errors.push({text: "Details can\'t be empty."});
     }
 
     if(errors.length > 0) {
