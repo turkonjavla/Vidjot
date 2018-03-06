@@ -34,7 +34,11 @@ app.get("/", (req, res) => {
 
 // INDEX
 app.get("/ideas", (req, res) => {
-    res.render("index");
+    Idea.find({})
+        .sort({date: "desc"})
+        .then(ideas => {
+            res.render("index", {ideas: ideas});
+        });
 });
 
 // NEW

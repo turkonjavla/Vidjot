@@ -4,4 +4,19 @@
     <a href="/ideas/new" class="btn btn-outline-dark">Create your idea <i class="fa fa-chevron-right"></i></a>
 </div>
 
-<h1>hello world</h1>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+            {{#each ideas}}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{title}}</h5>
+                        <p class="card-text">{{details}}</p>
+                        <a href="" class="btn btn-outline-warning edit-button">Edit</a>
+                    </div>
+                </div>
+                {{else}}
+                <p class="lead text-center">There are no ideas. You can add an idea by clicking <a href="/ideas/new" class="text-warning">here</a></p>
+            {{/each}}
+
+    </div>
+</div>
