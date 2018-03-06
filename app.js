@@ -77,12 +77,15 @@ app.get("/ideas/new", (req, res) => {
 
 //EDIT
 app.get("/ideas/:id/edit", (req, res) => {
-    let id = req.params.id;
-    Idea.findOne(id)
+    Idea.findOne({
+        _id: req.params.id
+    })
         .then(idea => {
             res.render("edit", {idea: idea});
         });
 });
+
+//Update
 
 //ABOUT
 app.get("/about", (req, res) => {
