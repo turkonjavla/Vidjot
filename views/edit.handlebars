@@ -1,6 +1,6 @@
 <div class="row justify-content-center mt-4">
     <div class="col-md-6">
-        <form action="/ideas/{{_id}}?_method=put" method="post">
+        <form action="/ideas/{{idea._id}}?_method=put" method="post">
             <div class="card p-3">
                 <h3 class="">Edit idea</h3>
                 <form action="/ideas" method="post">
@@ -13,7 +13,7 @@
                         <textarea name="details" id="details" cols="20" rows="5" class="form-control">{{idea.details}}</textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-outline-success">Create</button>
+                        <button type="submit" class="btn btn-outline-info">Save changes</button>
                     </div>
                     <a href="/ideas" class="text-dark"><i class="fa fa-chevron-left"></i> Back to Ideas</a>
                 </form>

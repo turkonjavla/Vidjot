@@ -1,9 +1,10 @@
-const bodyParser = require("body-parser"),
-      mongoose   = require("mongoose"),
-      express    = require("express"),
-      exphbs     = require("express-handlebars"),
-      app        = express(),
-      port       = 5050 || process.env.PORT;
+const methodOverride = require("method-override"),
+      bodyParser     = require("body-parser"),
+      mongoose       = require("mongoose"),
+      express        = require("express"),
+      exphbs         = require("express-handlebars"),
+      app            = express(),
+      port           = 5050 || process.env.PORT;
 
 
 /* MODELS */
@@ -21,6 +22,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); 
+app.use(methodOverride("_method"));
  
 /* 
 ###############
@@ -46,6 +48,7 @@ app.get("/ideas/new", (req, res) => {
     res.render("new");
 });
 
+// CREATE
  app.post("/ideas", (req, res) => {
     let details  = req.body.details,
         title    = req.body.title,
@@ -75,7 +78,7 @@ app.get("/ideas/new", (req, res) => {
 
 // SHOW
 
-//EDIT
+// EDIT
 app.get("/ideas/:id/edit", (req, res) => {
     Idea.findOne({
         _id: req.params.id
@@ -85,9 +88,19 @@ app.get("/ideas/:id/edit", (req, res) => {
         });
 });
 
-//Update
+// UPDATE
+app.put("/ideas/:id", (req, res) => {
+    let id = req.params.id,
+        data = req.body;
 
-//ABOUT
+    Idea.findByIdAndUpdate(id, data)
+        .then(() => {
+            res.redirect("/ideas");
+        })
+        .catch(err => console.log(err));
+});
+
+// ABOUT
 app.get("/about", (req, res) => {
     res.render("about");
 });
