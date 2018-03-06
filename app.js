@@ -15,6 +15,10 @@ app.get("/ideas", (req, res) => {
     res.render("index");
 });
 
+app.get("/about", (req, res) => {
+    res.render("about");
+});
+
 // Open connection
 app.listen(port, process.env.IP, () => {
     console.log(`Server open at port: ${port}`)
