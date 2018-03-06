@@ -71,8 +71,18 @@ app.get("/ideas/new", (req, res) => {
             })
             .catch(err => console.log(err));
     }
-    
 }); 
+
+// SHOW
+
+//EDIT
+app.get("/ideas/:id/edit", (req, res) => {
+    let id = req.params.id;
+    Idea.findOne(id)
+        .then(idea => {
+            res.render("edit", {idea: idea});
+        });
+});
 
 //ABOUT
 app.get("/about", (req, res) => {
