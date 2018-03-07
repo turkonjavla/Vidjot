@@ -9,13 +9,13 @@ router.get("/", (req, res) => {
     Idea.find({})
         .sort({date: "desc"})
         .then(ideas => {
-            res.render("./ideas/index", {ideas: ideas});
+            res.render("ideas/index", {ideas: ideas});
         });
 });
 
 // NEW
 router.get("/new", (req, res) => {
-    res.render("./ideas/new");
+    res.render("ideas/new");
 });
 
 // CREATE
@@ -54,7 +54,7 @@ router.get("/:id/edit", (req, res) => {
         _id: req.params.id
     })
         .then(idea => {
-            res.render("./ideas/edit", {idea: idea});
+            res.render("ideas/edit", {idea: idea});
         });
 });
 
