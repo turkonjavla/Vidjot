@@ -3,12 +3,12 @@ const express = require("express"),
 
 // LOGIN
 router.get("/login", (req, res) => {
-    res.send("ok");
+    res.render("users/login");
 });
 
 // REGISTER
 router.get("/register", (req, res) => {
-    res.send("register");
+    res.render("users/register");
 });
 
 module.exports = router;
