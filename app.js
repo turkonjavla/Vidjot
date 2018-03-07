@@ -1,8 +1,10 @@
-const methodOverride = require("method-override"),
+const exphbs         = require("express-handlebars"),
+      methodOverride = require("method-override"),
+      session        = require("express-session"),
+      flash          = require("connect-flash"),
       bodyParser     = require("body-parser"),
       mongoose       = require("mongoose"),
       express        = require("express"),
-      exphbs         = require("express-handlebars"),
       app            = express(),
       port           = 5050 || process.env.PORT;
 
@@ -23,7 +25,24 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); 
 app.use(methodOverride("_method"));
- 
+
+// Express session
+app.use(session({
+    secret: "ellie",
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash());
+
+// Global variables
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");   
+    res.locals.info_msg = req.flash("info_msg"); 
+    res.locals.error =  req.flash("error");
+    next();
+});
+
 /* 
 ###############
     ROUTES
@@ -63,13 +82,13 @@ app.get("/ideas/new", (req, res) => {
     }
 
     if(errors.length > 0) {
-        console.log(errors);
         res.render("new", {errors: errors});
     }
     else {
         new Idea(ideaData)
             .save()
             .then(idea => {
+                req.flash("success_msg", "Video idea added");
                 res.redirect("/ideas");
             })
             .catch(err => console.log(err));
@@ -95,6 +114,7 @@ app.put("/ideas/:id", (req, res) => {
 
     Idea.findByIdAndUpdate(id, data)
         .then(() => {
+            req.flash("info_msg", "Video idea updated");
             res.redirect("/ideas");
         })
         .catch(err => console.log(err));
@@ -105,6 +125,7 @@ app.delete("/ideas/:id", (req, res) => {
     
     Idea.findByIdAndRemove(id)
         .then(() => {
+            req.flash("success_msg", "Video idea removed")
             res.redirect("/ideas");
         })
         .catch(err => console.log(err));
