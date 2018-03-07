@@ -9,8 +9,8 @@ const exphbs         = require("express-handlebars"),
       port           = 5050 || process.env.PORT;
 
 
-/* MODELS */
- const Idea = require("./models/Idea"); 
+const ideas = require("./routes/ideas");
+      users = require("./routes/users");
 
 /* DB Connection */
 const db = process.env.DATABASEURL;
@@ -53,88 +53,14 @@ app.get("/", (req, res) => {
     res.redirect("/ideas");
 });
 
-// INDEX
-app.get("/ideas", (req, res) => {
-    Idea.find({})
-        .sort({date: "desc"})
-        .then(ideas => {
-            res.render("index", {ideas: ideas});
-        });
-});
-
-// NEW
-app.get("/ideas/new", (req, res) => {
-    res.render("new");
-});
-
-// CREATE
- app.post("/ideas", (req, res) => {
-    let details  = req.body.details,
-        title    = req.body.title,
-        errors   = [],
-        ideaData = ({title: title, details: details});
-
-    if(!title) {
-        errors.push({text: "Title can\'t be empty."});
-    }
-    if(!details) {
-        errors.push({text: "Details can\'t be empty."});
-    }
-
-    if(errors.length > 0) {
-        res.render("new", {errors: errors});
-    }
-    else {
-        new Idea(ideaData)
-            .save()
-            .then(idea => {
-                req.flash("success_msg", "Video idea added");
-                res.redirect("/ideas");
-            })
-            .catch(err => console.log(err));
-    }
-}); 
-
-// SHOW
-
-// EDIT
-app.get("/ideas/:id/edit", (req, res) => {
-    Idea.findOne({
-        _id: req.params.id
-    })
-        .then(idea => {
-            res.render("edit", {idea: idea});
-        });
-});
-
-// UPDATE
-app.put("/ideas/:id", (req, res) => {
-    let id = req.params.id,
-        data = req.body;
-
-    Idea.findByIdAndUpdate(id, data)
-        .then(() => {
-            req.flash("info_msg", "Video idea updated");
-            res.redirect("/ideas");
-        })
-        .catch(err => console.log(err));
-});
-
-app.delete("/ideas/:id", (req, res) => {
-    let id = req.params.id;
-    
-    Idea.findByIdAndRemove(id)
-        .then(() => {
-            req.flash("success_msg", "Video idea removed")
-            res.redirect("/ideas");
-        })
-        .catch(err => console.log(err));
-});
-
 // ABOUT
 app.get("/about", (req, res) => {
     res.render("about");
 });
+
+// Use routes
+app.use("/ideas", ideas);
+app.use("/users", users);
 
 // Open connection
 app.listen(port, process.env.IP, () => {
