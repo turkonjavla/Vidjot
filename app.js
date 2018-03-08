@@ -3,14 +3,18 @@ const exphbs         = require("express-handlebars"),
       session        = require("express-session"),
       flash          = require("connect-flash"),
       bodyParser     = require("body-parser"),
+      passport       = require("passport"),
       mongoose       = require("mongoose"),
       express        = require("express"),
       app            = express(),
       port           = 5050 || process.env.PORT;
 
-
+// Load Routes
 const ideas = require("./routes/ideas");
       users = require("./routes/users");
+
+// Passport Config
+require("./config/passport")(passport);
 
 /* DB Connection */
 const db = process.env.DATABASEURL;
@@ -32,6 +36,11 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(flash());
 
 // Global variables
@@ -40,6 +49,7 @@ app.use((req, res, next) => {
     res.locals.error_msg = req.flash("error_msg");   
     res.locals.info_msg = req.flash("info_msg"); 
     res.locals.error =  req.flash("error");
+    res.locals.user = req.user || null;
     next();
 });
 
