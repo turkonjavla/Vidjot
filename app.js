@@ -6,8 +6,7 @@ const exphbs         = require("express-handlebars"),
       passport       = require("passport"),
       mongoose       = require("mongoose"),
       express        = require("express"),
-      app            = express(),
-      port           = 5050 || process.env.PORT;
+      app            = express();
 
 // Load Routes
 const ideas = require("./routes/ideas");
@@ -73,6 +72,6 @@ app.use("/ideas", ideas);
 app.use("/users", users);
 
 // Open connection
-app.listen(port, process.env.IP, () => {
+app.listen(process.env.PORT, process.env.IP, () => {
     console.log(`Server open at port: ${port}`)
 });

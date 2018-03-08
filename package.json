@@ -4,7 +4,6 @@
   "description": "node/express app with CRUD ",
   "main": "bin/dev",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bin/dev"
   },
   "repository": {
