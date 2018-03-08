@@ -1,11 +1,15 @@
 const express = require("express"),
       router  = express.Router();
 
+const {ensureAuthenticated} = require("../helpers/auth");
+
+
+
 /* MODELS */
 const Idea = require("../models/Idea"); 
 
 // INDEX
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
     Idea.find({})
         .sort({date: "desc"})
         .then(ideas => {
@@ -14,12 +18,12 @@ router.get("/", (req, res) => {
 });
 
 // NEW
-router.get("/new", (req, res) => {
+router.get("/new", ensureAuthenticated, (req, res) => {
     res.render("ideas/new");
 });
 
 // CREATE
-router.post("/", (req, res) => {
+router.post("/", ensureAuthenticated, (req, res) => {
     let details  = req.body.details,
         title    = req.body.title,
         errors   = [],
@@ -51,7 +55,7 @@ router.post("/", (req, res) => {
 }); 
 
 // EDIT
-router.get("/:id/edit", (req, res) => {
+router.get("/:id/edit", ensureAuthenticated, (req, res) => {
     Idea.findOne({
         _id: req.params.id
     })
@@ -61,7 +65,7 @@ router.get("/:id/edit", (req, res) => {
 });
 
 // UPDATE
-router.put("/:id", (req, res) => {
+router.put("/:id", ensureAuthenticated, (req, res) => {
     let id = req.params.id,
         data = req.body;
 
@@ -74,7 +78,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", (req, res) => {
+router.delete("/:id", ensureAuthenticated, (req, res) => {
     let id = req.params.id;
     
     Idea.findByIdAndRemove(id)
