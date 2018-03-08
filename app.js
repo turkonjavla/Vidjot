@@ -73,5 +73,5 @@ app.use("/users", users);
 
 // Open connection
 app.listen(process.env.PORT, process.env.IP, () => {
-    console.log(`Server open at port: ${port}`)
+    console.log(`Server started!`);
 });

@@ -4,7 +4,7 @@
   "description": "node/express app with CRUD ",
   "main": "bin/dev",
   "scripts": {
-    "start": "node bin/dev"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
