@@ -10,7 +10,7 @@ const Idea = require("../models/Idea");
 
 // INDEX
 router.get("/", ensureAuthenticated, (req, res) => {
-    Idea.find({})
+    Idea.find({user: req.user.id})
         .sort({date: "desc"})
         .then(ideas => {
             res.render("ideas/index", {ideas: ideas});
@@ -26,8 +26,9 @@ router.get("/new", ensureAuthenticated, (req, res) => {
 router.post("/", ensureAuthenticated, (req, res) => {
     let details  = req.body.details,
         title    = req.body.title,
+        user     = req.user.id,
         errors   = [],
-        ideaData = ({title: title, details: details});
+        ideaData = ({title: title, details: details, user: user});
 
     if(!title) {
         errors.push({text: "Title can\'t be empty."});
@@ -60,7 +61,13 @@ router.get("/:id/edit", ensureAuthenticated, (req, res) => {
         _id: req.params.id
     })
         .then(idea => {
-            res.render("ideas/edit", {idea: idea});
+            if(idea.user != req.user.id) {
+                req.flash("error_msg", "You are not authorized to do that!");
+                res.redirect("/ideas");
+            }
+            else {
+                res.render("ideas/edit", {idea: idea});
+            }
         });
 });
 
